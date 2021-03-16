@@ -1,6 +1,6 @@
 {
-  "name": "api-routes-rest",
-  "version": "1.0.0",
+  "name": "catacrocker",
+  "version": "0.1.0",
   "scripts": {
     "dev": "next",
     "build": "next build",
@@ -12,5 +12,10 @@
     "react-dom": "^16.8.6",
     "swr": "^0.1.18"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^14.14.35",
+    "@types/react": "^17.0.3",
+    "typescript": "^4.2.3"
+  }
 }
