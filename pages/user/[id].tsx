@@ -3,15 +3,15 @@ import useSwr from 'swr'
 
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
-export default function User() {
+export default function Bird() {
   const router = useRouter()
-  const { data, error } = useSwr(
-    router.query.id ? `/api/user/${router.query.id}` : null,
+  const { data: bird, error } = useSwr(
+    router.query.id ? `/api/bird/${router.query.id}` : null,
     fetcher
   )
 
-  if (error) return <div>Failed to load user</div>
-  if (!data) return <div>Loading...</div>
+  if (error) return <div>Failed to load bird</div>
+  if (!bird) return <div>Loading...</div>
 
-  return <div>{data.name}</div>
+  return <div>{bird.name}</div>
 }

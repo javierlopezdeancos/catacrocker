@@ -4,10 +4,10 @@ import Link from 'next/link'
 const fetcher = (url) => fetch(url).then((res) => res.json())
 
 export default function Index() {
-  const { data, error } = useSwr('/api/users', fetcher)
+  const { data: birds, error } = useSwr('/api/birds', fetcher)
 
   if (error) return <div>Failed to load users</div>
-  if (!data) return <div>Loading...</div>
+  if (!birds) return <div>Loading...</div>
 
   return (
     <div>
@@ -16,10 +16,10 @@ export default function Index() {
         <h2>Aplicación de visualización de impactos de aves en aeropuertos</h2>
       </header>
       <ul>
-        {data.map((user) => (
-          <li key={user.id}>
-            <Link href="/user/[id]" as={`/user/${user.id}`}>
-              <a>{`User ${user.id}`}</a>
+        {birds.map((bird) => (
+          <li key={bird.id}>
+            <Link href="/user/[id]" as={`/bird/${bird.id}`}>
+              <a>{`User ${bird.id}`}</a>
             </Link>
           </li>
         ))}
