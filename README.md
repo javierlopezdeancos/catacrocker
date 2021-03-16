@@ -1,4 +1,4 @@
-# CATACROCKER
+# Catacrocker ✈️ 💥 🦅
 
-## Aplicación de visualización de impactos de aves en aeropuertos
+## Aplicación para visualización de impactos de aves con aviones en aeropuertos
 
