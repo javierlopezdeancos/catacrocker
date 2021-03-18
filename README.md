@@ -1,4 +1,4 @@
-# Catacrocker ⚠️ 🦅
+# Catacrocker :warning: :bird:
 
 ## Aplicación para gestión de impactos de aves con aviones en aeropuertos españoles
 
