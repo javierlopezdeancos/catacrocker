@@ -18,8 +18,8 @@ export default function Index() {
       <ul>
         {birds.map((bird) => (
           <li key={bird.id}>
-            <Link href="/user/[id]" as={`/bird/${bird.id}`}>
-              <a>{`User ${bird.id}`}</a>
+            <Link href="/bird/[id]" as={`/bird/${bird.id}`}>
+              <a>{`Bird ${bird.id}`}</a>
             </Link>
           </li>
         ))}

@@ -13,5 +13,5 @@ export default function Bird() {
   if (error) return <div>Failed to load bird</div>
   if (!bird) return <div>Loading...</div>
 
-  return <div>{bird.name}</div>
+  return <div>{bird.species}</div>
 }
