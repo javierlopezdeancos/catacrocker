@@ -11,6 +11,7 @@ yarn*
 
 # next.js
 /.next/
+next.config.js
 /out/
 
 # production
