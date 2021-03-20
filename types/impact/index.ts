@@ -1,13 +1,13 @@
 export type Dates = {
-  local: string,
-  UTC: string,
+  local: Date,
+  utc: Date,
 }
 
 export type Impact = {
   id: string;
-  airport: string;
-  bird: string;
-  flight: string;
+  airportId: string;
+  birdId: string;
+  flightId: string;
   dates: Dates;
   images?: string[];
 }

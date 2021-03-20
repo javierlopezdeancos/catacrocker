@@ -1,39 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Impacts } from '../types/impact'
 
-const impacts = [
-  {
-    id: '1',
-    airport: '',
-    bird: '',
-    flight: '',
-    dates: {
-      local: "2021-03-18T09:11:24.792Z",
-      UTC: "1899-12-31T00:00:00.000Z",
-    },
-  },
-  {
-    id: '2',
-    airport: '',
-    bird: '',
-    flight: '',
-    dates: {
-      local: "2021-03-18T09:11:24.792Z",
-      UTC: "1899-12-31T00:00:00.000Z",
-    },
-  },
-  {
-    id: '3',
-    airport: '',
-    bird: '',
-    flight: '',
-    dates: {
-      local: "2021-03-18T09:11:24.792Z",
-      UTC: "1899-12-31T00:00:00.000Z",
-    },
-  },
-]
+import { Document } from 'mongoose'
+import { Impact } from '../../types/impact'
+import connectDB from '../../middleware/mongodb'
+import impactModel from '../../models/impact'
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Impacts>) {
-  res.status(200).json(impacts)
+const handler = async (req: NextApiRequest, res: NextApiResponse<Document<Impact, {}>[]>) => {
+ // Get all impacts
+  if (req.method === 'GET') {
+    const impacts = await impactModel.find({}) as Document<Impact, {}>[];
+
+    if (impacts) {
+      res.status(200).json(impacts)
+    }
+  }
 }
+
+export default connectDB(handler);

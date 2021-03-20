@@ -1,24 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Flights } from '../types/flight'
 
-const flights = [
-  {
-    id: '1',
-    registration: '1-JVN-3456',
-    number: '1-3282347927483',
-  },
-  {
-    id: '2',
-    registration: '2-BZN-2886',
-    number: '2-3282347927483',
-  },
-  {
-    id: '3',
-    registration: '3-ZVN-0871',
-    number: '3-3282347927483',
-  },
-]
+import { Document } from 'mongoose'
+import { Flight } from '../../types/flight'
+import connectDB from '../../middleware/mongodb'
+import flightModel from '../../models/flight'
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<Flights>) {
-  res.status(200).json(flights)
+const handler = async (req: NextApiRequest, res: NextApiResponse<Document<Flight, {}>[]>) => {
+  // Get all flights
+  if (req.method === 'GET') {
+    const flight = await flightModel.find({}) as Document<Flight, {}>[];
+
+    if (flight) {
+      res.status(200).json(flight)
+    }
+  }
 }
+
+export default connectDB(handler);

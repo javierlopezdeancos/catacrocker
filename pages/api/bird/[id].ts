@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { Users } from '../../types/user'
+
+import { Users } from '../../../types/user'
 
 export default function userHandler(req: NextApiRequest, res: NextApiResponse) {
   const {
