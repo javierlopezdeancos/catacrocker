@@ -14,15 +14,15 @@ const datesSchema = new Schema({
 });
 
 const impactSchema = new Schema({
-  airportId: {
+  airport: {
     type: mongoose.Types.ObjectId,
     required: true
   },
-  birdId: {
+  bird: {
     type: mongoose.Types.ObjectId,
     required: true
   },
-  flightId: {
+  flight: {
     type: mongoose.Types.ObjectId,
     required: true
   },
