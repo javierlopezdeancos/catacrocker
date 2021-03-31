@@ -2,7 +2,7 @@
   "name": "catacrocker",
   "version": "0.1.0",
   "scripts": {
-    "dev": "npx next",
+    "dev": "npx next -p 8000",
     "build": "npx next build",
     "start": "npx next start",
     "test": "npx jest"
