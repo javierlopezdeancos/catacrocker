@@ -6,36 +6,63 @@ import { Document } from 'mongoose'
 import birdModel from '../../models/bird'
 import connectDB from '../../middleware/mongodb'
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Document<Bird, {}>[] | ResponseError>) => {
-  // Get all birds
-  if (req?.method === 'GET') {
+const methodNotAllowed = (res: NextApiResponse<Document<Bird, {}>[] | ResponseError>) => {
+  res.status(405).json({
+    error: true,
+    message: 'Method Not Allowed'
+  })
+}
+
+const getBirdsHandler = async (res: NextApiResponse<Document<Bird, {}>[] | ResponseError>): Promise<void> => {
+  try {
     const birds = await birdModel.find({}) as Document<Bird, {}>[];
 
     if (birds) {
       res.status(200).json(birds)
     }
+  } catch (error) {
+    res.status(403).json({
+      error: true,
+      message: error.message,
+    })
+  }
+}
+
+const createBirdHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Document<Bird, {}>[] | ResponseError>
+): Promise<void> => {
+  const bird = req.body
+
+  if (bird) {
+    try {
+      const birdCreated = await birdModel.create(bird) as Document<Bird, {}>[];
+      res.status(201).json(birdCreated)
+    } catch (error) {
+      res.status(403).json({
+        error: true,
+        message: error.message,
+      })
+    }
   }
 
-  if (req?.method === 'POST') {
-    const { bird } = req.body
+  res.status(400).json({
+    error: true,
+    message: 'Imposible to find bird param to save'
+  })
+}
 
-    if (bird) {
-      try {
-        const birds = await birdModel.save(bird) as Document<Bird, {}>[];
-        res.status(200).json(birds)
-      } catch (error) {
-        res.status(403).json({
-          error: true,
-          message: error.message,
-        })
-      }
-
-    }
-
-    res.status(400).json({
-      error: true,
-      message: 'Imposible find bird param to save'
-    })
+const handler = async (req: NextApiRequest, res: NextApiResponse<Document<Bird, {}>[] | ResponseError>) => {
+  switch (req?.method) {
+    case 'GET':
+      await getBirdsHandler(res)
+      break;
+    case 'POST':
+      createBirdHandler(req, res)
+      break;
+    default:
+      methodNotAllowed(res)
+      break;
   }
 }
 
