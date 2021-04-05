@@ -14,6 +14,10 @@ const datesSchema = new Schema({
 });
 
 const impactSchema = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
   airport: {
     type: mongoose.Types.ObjectId,
     required: true

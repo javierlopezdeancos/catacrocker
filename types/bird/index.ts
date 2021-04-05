@@ -1,5 +1,5 @@
 export type Bird = {
-  id: string,
+  _id: string,
   species?: string,
   latinSpeciesName?: string,
   weight?: string,

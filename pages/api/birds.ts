@@ -1,21 +1,24 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next'
 
 import { Bird } from '../../types/bird'
 import { ResponseError } from '../../types/api'
 import { Document } from 'mongoose'
-import birdModel from '../../models/bird'
+import BirdModel from '../../models/bird'
 import connectDB from '../../middleware/mongodb'
 
-const methodNotAllowed = (res: NextApiResponse<Document<Bird, {}>[] | ResponseError>) => {
+const respondMethodNotAllowed = (res: NextApiResponse<Document<Bird, {}>[] | ResponseError>) => {
   res.status(405).json({
     error: true,
     message: 'Method Not Allowed'
   })
 }
 
-const getBirdsHandler = async (res: NextApiResponse<Document<Bird, {}>[] | ResponseError>): Promise<void> => {
+export const getBirdsHandler: NextApiHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Document<Bird, {}>[] | ResponseError>
+): Promise<void> => {
   try {
-    const birds = await birdModel.find({}) as Document<Bird, {}>[];
+    const birds = await BirdModel.find({}) as Document<Bird, {}>[];
 
     if (birds) {
       res.status(200).json(birds)
@@ -36,7 +39,7 @@ const createBirdHandler = async (
 
   if (bird) {
     try {
-      const birdCreated = await birdModel.create(bird) as Document<Bird, {}>[];
+      const birdCreated = await BirdModel.create(bird) as Document<Bird, {}>[];
       res.status(201).json(birdCreated)
     } catch (error) {
       res.status(403).json({
@@ -55,13 +58,13 @@ const createBirdHandler = async (
 const handler = async (req: NextApiRequest, res: NextApiResponse<Document<Bird, {}>[] | ResponseError>) => {
   switch (req?.method) {
     case 'GET':
-      await getBirdsHandler(res)
+      await getBirdsHandler(req, res)
       break;
     case 'POST':
-      createBirdHandler(req, res)
+      await createBirdHandler(req, res)
       break;
     default:
-      methodNotAllowed(res)
+      respondMethodNotAllowed(res)
       break;
   }
 }
