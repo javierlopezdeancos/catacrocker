@@ -1,9 +1,9 @@
-import type { NextApiRequest, NextApiResponse, NextApiHandler } from 'next'
+import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
 
 import { Bird } from '../../types/bird'
-import { ResponseError } from '../../types/api'
-import { Document } from 'mongoose'
 import BirdModel from '../../models/bird'
+import { Document } from 'mongoose'
+import { ResponseError } from '../../types/api'
 import connectDB from '../../middleware/mongodb'
 
 const respondMethodNotAllowed = (res: NextApiResponse<Document<Bird, {}>[] | ResponseError>) => {

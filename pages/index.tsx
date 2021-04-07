@@ -26,8 +26,8 @@ export default function Index() {
           </header>
           <ul>
             {birds.map((bird: Bird) => (
-              <li key={bird.id}>
-                <Link href="/bird/[id]" as={`/bird/${bird.id}`}>
+              <li key={bird._id}>
+                <Link href="/bird/[id]" as={`/bird/${bird._id}`}>
                   <a>{bird?.species}</a>
                 </Link>
               </li>
