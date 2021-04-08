@@ -26,7 +26,6 @@ describe(`${BIRDS_API_ROUTE}`, () => {
   });
 
     const response = createResponse();
-
     await getBirdsHandler(request, response)
 
     expect(response.statusCode).toBe(200)
@@ -41,7 +40,6 @@ describe(`${BIRDS_API_ROUTE}`, () => {
   });
 
     const response = createResponse();
-
     await getBirdsHandler(request, response)
     const birds = response._getJSONData()
 
