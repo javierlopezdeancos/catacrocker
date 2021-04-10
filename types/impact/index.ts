@@ -1,3 +1,7 @@
+import { Flight } from '../flight'
+import { Bird } from '../bird'
+import { Airport } from '../airport'
+
 export type Dates = {
   local: Date,
   utc: Date,
@@ -5,9 +9,9 @@ export type Dates = {
 
 export type Impact = {
   id: string;
-  airportId: string;
-  birdId: string;
-  flightId: string;
+  airportId: Airport;
+  bird: Bird;
+  flight: Flight;
   dates: Dates;
   images?: string[];
 }

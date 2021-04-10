@@ -1,8 +1,12 @@
 import mongoose from 'mongoose';
 
-const Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
-const birdSchema = new Schema({
+const BirdSchema = new Schema({
+  _id: {
+    type: Schema.Types.ObjectId,
+    required: true,
+  },
   species: {
     type: String,
     required: true
@@ -25,12 +29,13 @@ const birdSchema = new Schema({
   },
 });
 
-let birdModel:any
+
+let BirdModel:any
 
 try {
-  birdModel = mongoose.model('Bird')
+  BirdModel = mongoose.model('Bird')
 } catch (error) {
-  birdModel = mongoose.model('Bird', birdSchema)
+  BirdModel = mongoose.model('Bird', BirdSchema)
 }
 
-export default birdModel;
+export default BirdModel;
