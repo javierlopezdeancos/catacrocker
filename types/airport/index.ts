@@ -1,5 +1,5 @@
 export type Airport = {
-  id: string,
+  _id: string,
   name: string,
   iata: string,
   country?: string,

@@ -8,7 +8,7 @@ import { BIRDS } from '../../routes/birds'
 import { Bird } from '../../types/bird'
 import BirdModel from '../../models/bird'
 import birdsMock from '../../mocks/birds'
-import { getBirdsHandler } from '../../pages/api/birds'
+import { getBirdsHandler } from '../../controllers/birds'
 
 const BIRDS_API_ROUTE = `${API}${BIRDS}`
 

@@ -1,18 +1,23 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { createAirportHandler, getAirportsHandler } from '../../controllers/airports'
 
 import { Airport } from '../../types/airport'
 import { Document } from 'mongoose'
-import airportModel from '../../models/airport'
-import connectDB from '../../middleware/mongodb';
+import { ResponseError } from '../../types/api'
+import connectDB from '../../middleware/mongodb'
+import { respondMethodNotAllowed } from '../../controllers'
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Document<Airport, {}>[]>) => {
-  // Get all airports
-  if (req.method === 'GET') {
-    const airports = await airportModel.find({}) as Document<Airport, {}>[];
-
-    if (airports) {
-      res.status(200).json(airports)
-    }
+const handler = async (req: NextApiRequest, res: NextApiResponse<Document<Airport, {}>[] | ResponseError>) => {
+  switch (req?.method) {
+    case 'GET':
+      await getAirportsHandler(req, res)
+      break;
+    case 'POST':
+      await createAirportHandler(req, res)
+      break;
+    default:
+      respondMethodNotAllowed(res)
+      break;
   }
 }
 
