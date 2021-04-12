@@ -9,15 +9,12 @@ const connectDB = (handler: (req: NextApiRequest, res: NextApiResponse) => void)
       return handler(req, res);
     }
     // Use new db connection
-    await mongoose.connect(
-      process.env.mongodburl,
-      {
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-        useCreateIndex: true,
-        useNewUrlParser: true
-      }
-    );
+    await mongoose.connect(process.env.MONGODB_URL, {
+      useUnifiedTopology: true,
+      useFindAndModify: false,
+      useCreateIndex: true,
+      useNewUrlParser: true
+    });
 
     return handler(req, res);
   };

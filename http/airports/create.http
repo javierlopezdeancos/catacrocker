@@ -1,0 +1,9 @@
+POST http://localhost:8000/api/airports HTTP/1.1
+content-type: application/json
+
+{
+  "name": "La Coruña",
+  "iata": "LCG",
+  "country": "Spain",
+
+}
