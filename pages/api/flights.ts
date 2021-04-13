@@ -3,16 +3,24 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { Document } from 'mongoose'
 import { Flight } from '../../types/flight'
 import connectDB from '../../middleware/mongodb'
-import flightModel from '../../models/flight'
+import { getFlightsHandler, createFlightHandler } from '../../controllers/flights'
+import { ResponseError } from '../../types/api'
+import { respondMethodNotAllowed } from '../../controllers'
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Document<Flight, {}>[]>) => {
-  // Get all flights
-  if (req.method === 'GET') {
-    const flight = await flightModel.find({}) as Document<Flight, {}>[];
-
-    if (flight) {
-      res.status(200).json(flight)
-    }
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Document<Flight, {}>[] | Document<Flight, {}> | ResponseError>
+) => {
+  switch (req?.method) {
+    case 'GET':
+      await getFlightsHandler(req, res)
+      break;
+    case 'POST':
+      await createFlightHandler(req, res)
+      break;
+    default:
+      respondMethodNotAllowed(res)
+      break;
   }
 }
 
