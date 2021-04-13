@@ -17,21 +17,28 @@ describe(`${AIRPORTS_API_ROUTE}`, () => {
     jest.clearAllMocks();
   })
 
-  xtest("should responds 200 when GET", async () => {
+  test("should responds 200 when GET to get airports", async () => {
     jest.spyOn(AirportModel, 'find').mockImplementationOnce((): Promise<Airport[]> => Promise.resolve(airportsMock))
 
     const request  = createRequest({
       method: 'GET',
       url: AIRPORTS_API_ROUTE,
-  });
+    })
 
-    const response = createResponse();
+    const response = createResponse({
+      eventEmitter: require('events').EventEmitter
+    })
+
     await getAirportsHandler(request, response)
 
-    expect(response.statusCode).toBe(200)
+    request.send()
+
+    response.on('end', function () {
+      expect(response.statusCode).toBe(200)
+    })
   })
 
-  xtest("responds with birds in BBDD when GET", async () => {
+  test("should responds with airports in BBDD when GET to get airports", async () => {
     jest.spyOn(AirportModel, 'find').mockImplementationOnce((): Promise<Airport[]> => Promise.resolve(airportsMock))
 
     const request  = createRequest({
@@ -39,11 +46,18 @@ describe(`${AIRPORTS_API_ROUTE}`, () => {
       url: AIRPORTS_API_ROUTE,
     });
 
-    const response = createResponse();
-    await getAirportsHandler(request, response)
-    const airports = response._getJSONData()
+    const response = createResponse({
+      eventEmitter: require('events').EventEmitter
+    })
 
-    expect(airports).toMatchObject(airportsMock)
+    await getAirportsHandler(request, response)
+
+    request.send()
+
+    response.on('end', function () {
+      const airports = response._getJSONData()
+      expect(airports).toMatchObject(airportsMock)
+    })
   })
 
   afterEach(() => {
