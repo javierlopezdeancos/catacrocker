@@ -17,7 +17,7 @@ describe(`${FLIGHTS_API_ROUTE}`, () => {
     jest.clearAllMocks();
   })
 
-  test("should responds 200 when GET", async () => {
+  xtest("should responds 200 when GET", async () => {
     jest.spyOn(FlightModel, 'find').mockImplementationOnce((): Promise<Flight[]> => Promise.resolve(flightsMock))
 
     const request  = createRequest({
@@ -31,7 +31,7 @@ describe(`${FLIGHTS_API_ROUTE}`, () => {
     expect(response.statusCode).toBe(200)
   })
 
-  test("responds with birds in BBDD when GET", async () => {
+  xtest("responds with birds in BBDD when GET", async () => {
     jest.spyOn(FlightModel, 'find').mockImplementationOnce((): Promise<Flight[]> => Promise.resolve(flightsMock))
 
     const request  = createRequest({
