@@ -9,22 +9,29 @@ export const getAirportsHandler: NextApiHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<Document<Airport, {}>[] | ResponseError>
 ): Promise<void> => {
-  const airports = await AirportModel.find({}) as Document<Airport, {}>[];
+  try {
+    const airports = await AirportModel.find({}) as Document<Airport, {}>[];
 
-  if (airports) {
-    res.status(200).json(airports)
+    if (airports) {
+      res.status(200).json(airports)
+    }
+  } catch (error) {
+    res.status(403).json({
+      error: true,
+      message: error.message,
+    })
   }
 }
 
 export const createAirportHandler = async (
   req: NextApiRequest,
-  res: NextApiResponse<Document<Airport, {}>[] | ResponseError>
+  res: NextApiResponse<Document<Airport, {}> | ResponseError>
 ): Promise<void> => {
   const airport = req.body
 
   if (airport) {
     try {
-      const airportCreated = await AirportModel.create(airport) as Document<Airport, {}>[];
+      const airportCreated = await AirportModel.create(airport) as Document<Airport, {}>;
       res.status(201).json(airportCreated)
     } catch (error) {
       res.status(403).json({

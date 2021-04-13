@@ -34,7 +34,7 @@ export const createBirdHandler = async (
       const birdCreated = await BirdModel.create(bird) as Document<Bird, {}>;
 
       if (birdCreated) {
-        res.status(200).json(birdCreated)
+        res.status(201).json(birdCreated)
       }
     } catch (error) {
       res.status(403).json({

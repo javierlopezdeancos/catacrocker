@@ -7,8 +7,8 @@ import { AIRPORTS } from '../../routes/airports'
 import API from '../../routes'
 import { Airport } from '../../types/airport'
 import AirportModel from '../../models/airport'
-import airportsMock from '../../mocks/airports'
-import { getAirportsHandler } from '../../controllers/airports'
+import airportsMock, { airport as airportMock } from '../../mocks/airports'
+import { getAirportsHandler, createAirportHandler } from '../../controllers/airports'
 
 const AIRPORTS_API_ROUTE = `${API}${AIRPORTS}`
 
@@ -58,6 +58,51 @@ describe(`${AIRPORTS_API_ROUTE}`, () => {
       const airports = response._getJSONData()
       expect(airports).toMatchObject(airportsMock)
     })
+  })
+
+  test('should responds 201 when POST with correct params to create a airport', async () => {
+    jest.spyOn(AirportModel, 'create').mockImplementationOnce((): Promise<Airport> => Promise.resolve(airportMock))
+
+    const request = createRequest({
+      method: 'POST',
+      url: AIRPORTS_API_ROUTE,
+      body: airportMock,
+    })
+
+    const response = createResponse({
+      eventEmitter: require('events').EventEmitter
+    })
+
+    await createAirportHandler(request, response)
+
+    request.send()
+
+    response.on('end', function () {
+      expect(response.statusCode).toBe(201)
+    });
+  })
+
+  test('should responds with airport created in BBDD when POST with correct params to create an airport', async () => {
+    jest.spyOn(AirportModel, 'create').mockImplementationOnce((): Promise<Airport> => Promise.resolve(airportMock))
+
+    const request = createRequest({
+      method: 'POST',
+      url: AIRPORTS_API_ROUTE,
+      body: airportMock,
+    })
+
+    const response = createResponse({
+      eventEmitter: require('events').EventEmitter
+    })
+
+    await createAirportHandler(request, response)
+
+    request.send()
+
+    response.on('end', function () {
+      const birdCreated = response._getJSONData()
+      expect(birdCreated).toMatchObject(airportMock)
+    });
   })
 
   afterEach(() => {
