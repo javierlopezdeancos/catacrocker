@@ -1,14 +1,14 @@
-import birdsMock, { bird as birdMock } from '../../mocks/birds'
-import { createBirdHandler, getBirdsHandler } from '../../controllers/birds'
+import birdsMock, { bird as birdMock } from '../../../mocks/birds'
+import { createBirdHandler, getBirdsHandler } from '../../../controllers/birds'
 import {
   createRequest,
   createResponse,
 } from 'node-mocks-http'
 
-import API from '../../routes'
-import { BIRDS } from '../../routes/birds'
-import { Bird } from '../../types/bird'
-import BirdModel from '../../models/bird'
+import API from '../../../routes'
+import { BIRDS } from '../../../routes/birds'
+import { Bird } from '../../../types/bird'
+import BirdModel from '../../../models/bird'
 
 const BIRDS_API_ROUTE = `${API}${BIRDS}`
 

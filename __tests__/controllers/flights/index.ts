@@ -3,12 +3,12 @@ import {
   createResponse,
 } from 'node-mocks-http'
 
-import API from '../../routes'
-import { FLIGHTS } from '../../routes/flights'
-import { Flight } from '../../types/flight'
-import FlightModel from '../../models/flight'
-import flightsMock from '../../mocks/flights'
-import { getFlightsHandler } from '../../controllers/flights'
+import API from '../../../routes'
+import { FLIGHTS } from '../../../routes/flights'
+import { Flight } from '../../../types/flight'
+import FlightModel from '../../../models/flight'
+import flightsMock from '../../../mocks/flights'
+import { getFlightsHandler } from '../../../controllers/flights'
 
 const FLIGHTS_API_ROUTE = `${API}${FLIGHTS}`
 

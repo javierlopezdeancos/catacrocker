@@ -3,12 +3,12 @@ import {
   createResponse,
 } from 'node-mocks-http'
 
-import { AIRPORTS } from '../../routes/airports'
-import API from '../../routes'
-import { Airport } from '../../types/airport'
-import AirportModel from '../../models/airport'
-import airportsMock, { airport as airportMock } from '../../mocks/airports'
-import { getAirportsHandler, createAirportHandler } from '../../controllers/airports'
+import { AIRPORTS } from '../../../routes/airports'
+import API from '../../../routes'
+import { Airport } from '../../../types/airport'
+import AirportModel from '../../../models/airport'
+import airportsMock, { airport as airportMock } from '../../../mocks/airports'
+import { getAirportsHandler, createAirportHandler } from '../../../controllers/airports'
 
 const AIRPORTS_API_ROUTE = `${API}${AIRPORTS}`
 
