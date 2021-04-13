@@ -23,6 +23,8 @@ export const getAirportsHandler: NextApiHandler = async (
   }
 }
 
+export const IMPOSIBLE_FIND_AIRPORT_TO_CREATE_IT_ERROR_MESSAGE = 'Imposible to find airport param to save'
+
 export const createAirportHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<Document<Airport, {}> | ResponseError>
@@ -43,6 +45,6 @@ export const createAirportHandler = async (
 
   res.status(400).json({
     error: true,
-    message: 'Imposible to find airport param to save'
+    message: IMPOSIBLE_FIND_AIRPORT_TO_CREATE_IT_ERROR_MESSAGE
   })
 }

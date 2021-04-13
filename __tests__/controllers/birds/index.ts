@@ -1,5 +1,9 @@
 import birdsMock, { bird as birdMock } from '../../../mocks/birds'
-import { createBirdHandler, getBirdsHandler } from '../../../controllers/birds'
+import {
+  createBirdHandler,
+  getBirdsHandler,
+  IMPOSIBLE_FIND_BIRD_TO_CREATE_IT_ERROR_MESSAGE,
+} from '../../../controllers/birds'
 import {
   createRequest,
   createResponse,
@@ -56,8 +60,9 @@ describe(`${BIRDS_API_ROUTE}`, () => {
 
     response.on('end', function () {
       const birds = response._getJSONData()
+
       expect(birds).toMatchObject(birdsMock)
-    });
+    })
   })
 
   test('should responds 201 when POST with correct params to create a bird', async () => {
@@ -79,7 +84,7 @@ describe(`${BIRDS_API_ROUTE}`, () => {
 
     response.on('end', function () {
       expect(response.statusCode).toBe(201)
-    });
+    })
   })
 
   test('should responds with bird created in BBDD when POST with correct params to create a bird', async () => {
@@ -101,8 +106,37 @@ describe(`${BIRDS_API_ROUTE}`, () => {
 
     response.on('end', function () {
       const birdCreated = response._getJSONData()
+
       expect(birdCreated).toMatchObject(birdMock)
-    });
+    })
+  })
+
+  test('should responds with a 400 error when POST with no params to create a bird', async () => {
+    jest.spyOn(BirdModel, 'create').mockImplementationOnce((): Promise<Bird> => Promise.resolve(birdMock))
+
+    const request = createRequest({
+      method: 'POST',
+      url: BIRDS_API_ROUTE,
+    })
+
+    const response = createResponse({
+      eventEmitter: require('events').EventEmitter
+    })
+
+    await createBirdHandler(request, response)
+
+    request.send()
+
+     response.on('end', function () {
+      const error = response._getJSONData()
+
+      expect(response.statusCode).toBe(400)
+
+      expect(error).toMatchObject({
+        error: true,
+        message: IMPOSIBLE_FIND_BIRD_TO_CREATE_IT_ERROR_MESSAGE,
+      })
+    })
   })
 
   afterEach(() => {

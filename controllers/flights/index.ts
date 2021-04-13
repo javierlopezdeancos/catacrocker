@@ -23,15 +23,17 @@ export const getFlightsHandler: NextApiHandler = async (
   }
 }
 
+export const IMPOSIBLE_FIND_FLIGHT_TO_CREATE_IT_ERROR_MESSAGE = 'Imposible to find flight param to save'
+
 export const createFlightHandler = async (
   req: NextApiRequest,
-  res: NextApiResponse<Document<Flight, {}>[] | ResponseError>
+  res: NextApiResponse<Document<Flight, {}> | ResponseError>
 ): Promise<void> => {
   const flights = req.body
 
   if (flights) {
     try {
-      const flightCreated = await FlightModel.create(flights) as Document<Flight, {}>[];
+      const flightCreated = await FlightModel.create(flights) as Document<Flight, {}>;
       res.status(201).json(flightCreated)
     } catch (error) {
       res.status(403).json({
@@ -43,6 +45,6 @@ export const createFlightHandler = async (
 
   res.status(400).json({
     error: true,
-    message: 'Imposible to find airport param to save'
+    message: 'Imposible to find flight param to save'
   })
 }

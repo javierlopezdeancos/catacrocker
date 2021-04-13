@@ -8,7 +8,11 @@ import API from '../../../routes'
 import { Airport } from '../../../types/airport'
 import AirportModel from '../../../models/airport'
 import airportsMock, { airport as airportMock } from '../../../mocks/airports'
-import { getAirportsHandler, createAirportHandler } from '../../../controllers/airports'
+import {
+  getAirportsHandler,
+  createAirportHandler,
+  IMPOSIBLE_FIND_AIRPORT_TO_CREATE_IT_ERROR_MESSAGE,
+} from '../../../controllers/airports'
 
 const AIRPORTS_API_ROUTE = `${API}${AIRPORTS}`
 
@@ -44,7 +48,7 @@ describe(`${AIRPORTS_API_ROUTE}`, () => {
     const request  = createRequest({
       method: 'GET',
       url: AIRPORTS_API_ROUTE,
-    });
+    })
 
     const response = createResponse({
       eventEmitter: require('events').EventEmitter
@@ -79,7 +83,7 @@ describe(`${AIRPORTS_API_ROUTE}`, () => {
 
     response.on('end', function () {
       expect(response.statusCode).toBe(201)
-    });
+    })
   })
 
   test('should responds with airport created in BBDD when POST with correct params to create an airport', async () => {
@@ -102,7 +106,35 @@ describe(`${AIRPORTS_API_ROUTE}`, () => {
     response.on('end', function () {
       const birdCreated = response._getJSONData()
       expect(birdCreated).toMatchObject(airportMock)
-    });
+    })
+  })
+
+  test('should responds with a 400 error when POST with no params to create an airport', async () => {
+    jest.spyOn(AirportModel, 'create').mockImplementationOnce((): Promise<Airport> => Promise.resolve(airportMock))
+
+    const request = createRequest({
+      method: 'POST',
+      url: AIRPORTS_API_ROUTE,
+    })
+
+    const response = createResponse({
+      eventEmitter: require('events').EventEmitter
+    })
+
+    await createAirportHandler(request, response)
+
+    request.send()
+
+    response.on('end', function () {
+      const error = response._getJSONData()
+
+      expect(response.statusCode).toBe(400)
+
+      expect(error).toMatchObject({
+        error: true,
+        message: IMPOSIBLE_FIND_AIRPORT_TO_CREATE_IT_ERROR_MESSAGE,
+      })
+    })
   })
 
   afterEach(() => {

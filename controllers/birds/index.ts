@@ -23,6 +23,8 @@ export const getBirdsHandler: NextApiHandler = async (
   }
 }
 
+export const IMPOSIBLE_FIND_BIRD_TO_CREATE_IT_ERROR_MESSAGE = 'Imposible to find bird param to save'
+
 export const createBirdHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<Document<Bird, {}> | ResponseError>
@@ -46,6 +48,6 @@ export const createBirdHandler = async (
 
   res.status(400).json({
     error: true,
-    message: 'Imposible to find bird param to save'
+    message: IMPOSIBLE_FIND_BIRD_TO_CREATE_IT_ERROR_MESSAGE
   })
 }
