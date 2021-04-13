@@ -25,14 +25,19 @@ export const getBirdsHandler: NextApiHandler = async (
 
 export const createBirdHandler = async (
   req: NextApiRequest,
-  res: NextApiResponse<Document<Bird, {}>[] | ResponseError>
+  res: NextApiResponse<Document<Bird, {}> | ResponseError>
 ): Promise<void> => {
   const bird = req.body
 
   if (bird) {
     try {
-      const birdCreated = await BirdModel.create(bird) as Document<Bird, {}>[];
-      res.status(201).json(birdCreated)
+      const birdCreated = await BirdModel.create(bird) as Document<Bird, {}>;
+      console.log('bird', bird)
+      console.log('birdCreated', birdCreated)
+
+      if (birdCreated) {
+        res.status(200).json(birdCreated)
+      }
     } catch (error) {
       res.status(403).json({
         error: true,

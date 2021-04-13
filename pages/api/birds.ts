@@ -7,7 +7,9 @@ import { ResponseError } from '../../types/api'
 import connectDB from '../../middleware/mongodb'
 import { respondMethodNotAllowed } from '../../controllers'
 
-const handler = async (req: NextApiRequest, res: NextApiResponse<Document<Bird, {}>[] | ResponseError>) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Document<Bird, {}>[] | Document<Bird, {}> | ResponseError>) => {
   switch (req?.method) {
     case 'GET':
       await getBirdsHandler(req, res)
