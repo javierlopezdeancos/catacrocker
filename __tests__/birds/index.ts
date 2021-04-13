@@ -35,7 +35,7 @@ describe(`${BIRDS_API_ROUTE}`, () => {
 
     response.on('end', function () {
       expect(response.statusCode).toBe(200)
-    });
+    })
   })
 
   test("should responds with birds in BBDD when GET to get birds", async () => {

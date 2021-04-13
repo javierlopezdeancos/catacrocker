@@ -9,10 +9,17 @@ export const getFlightsHandler: NextApiHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<Document<Flight, {}>[] | ResponseError>
 ): Promise<void> => {
-  const flights = await FlightModel.find({}) as Document<Flight, {}>[];
+  try {
+    const flights = await FlightModel.find({}) as Document<Flight, {}>[];
 
-  if (flights) {
-    res.status(200).json(flights)
+    if (flights) {
+      res.status(200).json(flights)
+    }
+  } catch (error) {
+    res.status(403).json({
+      error: true,
+      message: error.message,
+    })
   }
 }
 
