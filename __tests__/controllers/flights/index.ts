@@ -64,6 +64,29 @@ describe(`${FLIGHTS_API_ROUTE}`, () => {
     })
   })
 
+  test('should responds with flight created in BBDD when POST with correct params to create an flight', async () => {
+    jest.spyOn(FlightModel, 'create').mockImplementationOnce((): Promise<Flight> => Promise.resolve(flightMock))
+
+    const request = createRequest({
+      method: 'POST',
+      url: FLIGHTS_API_ROUTE,
+      body: flightMock,
+    })
+
+    const response = createResponse({
+      eventEmitter: require('events').EventEmitter
+    })
+
+    await createFlightHandler(request, response)
+
+    request.send()
+
+    response.on('end', function () {
+      const birdCreated = response._getJSONData()
+      expect(birdCreated).toMatchObject(flightMock)
+    })
+  })
+
   test('should responds with a 400 error when POST with no params to create a flight', async () => {
     jest.spyOn(FlightModel, 'create').mockImplementationOnce((): Promise<Flight> => Promise.resolve(flightMock))
 
@@ -80,7 +103,7 @@ describe(`${FLIGHTS_API_ROUTE}`, () => {
 
     request.send()
 
-     response.on('end', function () {
+    response.on('end', function () {
       const error = response._getJSONData()
 
       expect(response.statusCode).toBe(400)
