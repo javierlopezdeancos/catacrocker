@@ -1,17 +1,26 @@
-import { Airport } from '../types/airport'
-import { Bird } from '../types/bird'
-import { Flight } from '../types/flight'
-import Link from 'next/link'
-import fetcher from '../utils/fetcher'
-import useSwr from 'swr'
+import { Airport } from "../types/airport";
+import { Bird } from "../types/bird";
+import { Flight } from "../types/flight";
+import Link from "next/link";
+import fetcher from "../utils/fetcher";
+import useSwr from "swr";
 
 export default function Index() {
-  const { data: birds, error: birdsError } = useSwr('/api/birds', fetcher)
-  const { data: flights, error: flightsErrors } = useSwr('/api/flights', fetcher)
-  const { data: airports, error: airportsErrors } = useSwr('/api/airports', fetcher)
+  const { data: birds, error: birdsError } = useSwr("/api/birds", fetcher);
 
-  if (birdsError || flightsErrors || airportsErrors ) return <div>Failed to load users</div>
-  if (!birds || !flights || !airports ) return <div>Loading...</div>
+  const { data: flights, error: flightsErrors } = useSwr(
+    "/api/flights",
+    fetcher
+  );
+
+  const { data: airports, error: airportsErrors } = useSwr(
+    "/api/airports",
+    fetcher
+  );
+
+  if (birdsError || flightsErrors || airportsErrors)
+    return <div>Failed to load users</div>;
+  if (!birds || !flights || !airports) return <div>Loading...</div>;
 
   return (
     <div>
@@ -24,27 +33,31 @@ export default function Index() {
           <header>
             <h3>🦅 Pájaros</h3>
           </header>
-          <ul>
-            {birds.map((bird: Bird) => (
-              <li key={bird._id}>
-                <Link href="/bird/[id]" as={`/bird/${bird._id}`}>
-                  <a>{bird?.species}</a>
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <section>
+            <ul>
+              {birds.map((bird: Bird) => (
+                <li key={bird._id}>
+                  <Link href="/bird/[id]" as={`/bird/${bird._id}`}>
+                    <a>{bird?.species}</a>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
         </article>
         <article>
           <header>
             <h3>✈️ Vuelos</h3>
           </header>
-          <ul>
-            {flights.map((flight: Flight) => (
-              <li key={flight.id}>
-                <span>{ flight?.registration}</span>
-              </li>
-            ))}
-          </ul>
+          <section>
+            <ul>
+              {flights.map((flight: Flight) => (
+                <li key={flight._id}>
+                  <span>{flight?.registration}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
         </article>
         <article>
           <header>
@@ -52,15 +65,15 @@ export default function Index() {
           </header>
           <section>
             <ul>
-            {airports.map((airport: Airport) => (
-              <li key={airport.id}>
-                <span>{ airport?.name}</span>
-              </li>
-            ))}
-          </ul>
+              {airports.map((airport: Airport) => (
+                <li key={airport._id}>
+                  <span>{airport?.name}</span>
+                </li>
+              ))}
+            </ul>
           </section>
         </article>
       </main>
     </div>
-  )
+  );
 }

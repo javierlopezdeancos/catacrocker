@@ -1,24 +1,19 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from "next";
+import { respondMethodNotAllowed } from "../../../controllers";
+import { getBirdHandler } from "../../../controllers/birds";
+import connectDB from "../../../middleware/mongodb";
 
-import { Users } from '../../../types/user'
-
-export default function userHandler(req: NextApiRequest, res: NextApiResponse) {
-  const {
-    query: { id, name },
-    method,
-  } = req
+async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { method } = req;
 
   switch (method) {
-    case 'GET':
-      // Get data from your database
-      res.status(200).json({ id, name: `User ${id}` })
-      break
-    case 'PUT':
-      // Update or create data in your database
-      res.status(200).json({ id, name: name || `User ${id}` })
-      break
+    case "GET":
+      await getBirdHandler(req, res);
+      break;
     default:
-      res.setHeader('Allow', ['GET', 'PUT'])
-      res.status(405).end(`Method ${method} Not Allowed`)
+      respondMethodNotAllowed(res);
+      break;
   }
 }
+
+export default connectDB(handler);
