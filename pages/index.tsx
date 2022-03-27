@@ -1,9 +1,6 @@
-import { Airport } from "../types/airport";
-import { Bird } from "../types/bird";
-import { Flight } from "../types/flight";
-import Link from "next/link";
 import fetcher from "../utils/fetcher";
 import useSwr from "swr";
+import { Collection } from "../components/colletion";
 
 export default function Index() {
   const { data: birds, error: birdsError } = useSwr("/api/birds", fetcher);
@@ -18,9 +15,13 @@ export default function Index() {
     fetcher
   );
 
-  if (birdsError || flightsErrors || airportsErrors)
+  if (birdsError || flightsErrors || airportsErrors) {
     return <div>Failed to load users</div>;
-  if (!birds || !flights || !airports) return <div>Loading...</div>;
+  }
+
+  if (!birds || !flights || !airports) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -29,50 +30,24 @@ export default function Index() {
         <h2>Aplicación de visualización de impactos de aves en aeropuertos</h2>
       </header>
       <main>
-        <article>
-          <header>
-            <h3>🦅 Pájaros</h3>
-          </header>
-          <section>
-            <ul>
-              {birds.map((bird: Bird) => (
-                <li key={bird._id}>
-                  <Link href="/bird/[id]" as={`/bird/${bird._id}`}>
-                    <a>{bird?.species}</a>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </article>
-        <article>
-          <header>
-            <h3>✈️ Vuelos</h3>
-          </header>
-          <section>
-            <ul>
-              {flights.map((flight: Flight) => (
-                <li key={flight._id}>
-                  <span>{flight?.registration}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </article>
-        <article>
-          <header>
-            <h3>🏙️ Aeropuertos</h3>
-          </header>
-          <section>
-            <ul>
-              {airports.map((airport: Airport) => (
-                <li key={airport._id}>
-                  <span>{airport?.name}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        </article>
+        <Collection
+          name="Birds"
+          label={"species"}
+          item={"bird"}
+          collection={birds}
+        />
+        <Collection
+          name="Flights"
+          label={"airplane"}
+          item={"flight"}
+          collection={flights}
+        />
+        <Collection
+          name="Airports"
+          label={"name"}
+          item={"airport"}
+          collection={airports}
+        />
       </main>
     </div>
   );
