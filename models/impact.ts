@@ -1,17 +1,17 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose"
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const datesSchema = new Schema({
   local: {
     type: Date,
-    required: true
+    required: true,
   },
   utc: {
     type: Date,
-    required: true
+    required: true,
   },
-});
+})
 
 const impactSchema = new Schema({
   _id: {
@@ -20,32 +20,32 @@ const impactSchema = new Schema({
   },
   airport: {
     type: mongoose.Types.ObjectId,
-    required: true
+    required: true,
   },
   bird: {
     type: mongoose.Types.ObjectId,
-    required: true
+    required: true,
   },
   flight: {
     type: mongoose.Types.ObjectId,
-    required: true
+    required: true,
   },
   dates: {
     type: datesSchema,
-    required: true
+    required: true,
   },
   images: {
     type: [String],
-    required: false
+    required: false,
   },
-});
+})
 
-let impactModel:any
+let impactModel: any
 
 try {
-  impactModel = mongoose.model('Impact')
+  impactModel = mongoose.model("Impact")
 } catch (error) {
-  impactModel = mongoose.model('Impact', impactSchema)
+  impactModel = mongoose.model("Impact", impactSchema)
 }
 
-export default impactModel;
+export default impactModel

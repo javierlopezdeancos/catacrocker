@@ -1,16 +1,16 @@
-import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiHandler, NextApiRequest, NextApiResponse } from "next"
 
-import { Document } from 'mongoose'
-import { Flight } from '../../types/flight'
-import FlightModel from '../../models/flight'
-import { ResponseError } from '../../types/api'
+import { Document } from "mongoose"
+import { Flight } from "../../types/flight"
+import FlightModel from "../../models/flight"
+import { ResponseError } from "../../types/api"
 
 export const getFlightsHandler: NextApiHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<Document<Flight, {}>[] | ResponseError>
 ): Promise<void> => {
   try {
-    const flights = await FlightModel.find({}) as Document<Flight, {}>[];
+    const flights = (await FlightModel.find({})) as Document<Flight, {}>[]
 
     if (flights) {
       res.status(200).json(flights)
@@ -23,7 +23,8 @@ export const getFlightsHandler: NextApiHandler = async (
   }
 }
 
-export const IMPOSIBLE_FIND_FLIGHT_TO_CREATE_IT_ERROR_MESSAGE = 'Imposible to find flight param to save'
+export const IMPOSIBLE_FIND_FLIGHT_TO_CREATE_IT_ERROR_MESSAGE =
+  "Imposible to find flight param to save"
 
 export const createFlightHandler = async (
   req: NextApiRequest,
@@ -33,7 +34,10 @@ export const createFlightHandler = async (
 
   if (flights) {
     try {
-      const flightCreated = await FlightModel.create(flights) as Document<Flight, {}>;
+      const flightCreated = (await FlightModel.create(flights)) as Document<
+        Flight,
+        {}
+      >
       res.status(201).json(flightCreated)
     } catch (error) {
       res.status(403).json({
@@ -45,6 +49,6 @@ export const createFlightHandler = async (
 
   res.status(400).json({
     error: true,
-    message: 'Imposible to find flight param to save'
+    message: "Imposible to find flight param to save",
   })
 }

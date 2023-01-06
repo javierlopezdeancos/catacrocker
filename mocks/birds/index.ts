@@ -14,7 +14,7 @@ const birds = [
 export const bird = {
   images: [],
   _id: "60563fc5872fc514ee116353",
-  "species": "robin",
+  species: "robin",
 }
 
 export default birds

@@ -1,5 +1,4 @@
 export type ResponseError = {
-  error: boolean;
-  message?: string;
+  error: boolean
+  message?: string
 }
-

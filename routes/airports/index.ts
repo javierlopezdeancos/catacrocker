@@ -1,1 +1,1 @@
-export const AIRPORTS = '/airports'
+export const AIRPORTS = "/airports"

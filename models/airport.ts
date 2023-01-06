@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose"
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const airportSchema = new Schema({
   _id: {
@@ -9,33 +9,33 @@ const airportSchema = new Schema({
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
   iata: {
     type: String,
-    required: true
+    required: true,
   },
   country: {
     type: String,
     required: false,
-    default: 'Spain'
+    default: "Spain",
   },
   region: {
     type: String,
-    required: false
+    required: false,
   },
   images: {
     type: [String],
-    required: false
+    required: false,
   },
-});
+})
 
-let airportModel:any
+let airportModel: any
 
 try {
-  airportModel = mongoose.model('Airport')
+  airportModel = mongoose.model("Airport")
 } catch (error) {
-  airportModel = mongoose.model('Airport', airportSchema)
+  airportModel = mongoose.model("Airport", airportSchema)
 }
 
-export default airportModel;
+export default airportModel

@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose"
 
-const { Schema } = mongoose;
+const { Schema } = mongoose
 
 const BirdSchema = new Schema({
   _id: {
@@ -9,33 +9,32 @@ const BirdSchema = new Schema({
   },
   species: {
     type: String,
-    required: true
+    required: true,
   },
   latinSpeciesName: {
     type: String,
-    required: false
+    required: false,
   },
   weight: {
     type: String,
-    required: false
+    required: false,
   },
   wingspan: {
     type: String,
-    required: false
+    required: false,
   },
   images: {
     type: [String],
-    required: false
+    required: false,
   },
-});
+})
 
-
-let BirdModel:any
+let BirdModel: any
 
 try {
-  BirdModel = mongoose.model('Bird')
+  BirdModel = mongoose.model("Bird")
 } catch (error) {
-  BirdModel = mongoose.model('Bird', BirdSchema)
+  BirdModel = mongoose.model("Bird", BirdSchema)
 }
 
-export default BirdModel;
+export default BirdModel

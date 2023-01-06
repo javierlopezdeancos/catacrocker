@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose"
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 const flightSchema = new Schema({
   _id: {
@@ -9,24 +9,24 @@ const flightSchema = new Schema({
   },
   registration: {
     type: String,
-    required: true
+    required: true,
   },
   number: {
     type: String,
-    required: true
+    required: true,
   },
   airplane: {
     type: String,
     required: false,
   },
-});
+})
 
-let flightModel:any
+let flightModel: any
 
 try {
-  flightModel = mongoose.model('Flight')
+  flightModel = mongoose.model("Flight")
 } catch (error) {
-  flightModel = mongoose.model('Flight', flightSchema)
+  flightModel = mongoose.model("Flight", flightSchema)
 }
 
-export default flightModel;
+export default flightModel

@@ -1,3 +1,3 @@
-const API = '/api'
+const API = "/api"
 
 export default API

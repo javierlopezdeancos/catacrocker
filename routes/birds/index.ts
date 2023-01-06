@@ -1,1 +1,1 @@
-export const BIRDS = '/birds'
+export const BIRDS = "/birds"

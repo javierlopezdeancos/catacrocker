@@ -6,6 +6,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended",
+    "plugin:@next/next/recommended",
   ],
   settings: {
     react: {
@@ -39,4 +40,4 @@ module.exports = {
     "react/react-in-jsx-scope": "off",
   },
   globals: { React: "writable" },
-};
+}
