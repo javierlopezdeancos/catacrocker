@@ -8,6 +8,7 @@
     "test": "jest",
     "lint": "next lint",
     "format": "npx prettier --write .",
+    "format:check": "npx prettier --check .",
     "test:watch": "jest --watch"
   },
   "dependencies": {
