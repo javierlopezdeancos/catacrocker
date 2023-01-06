@@ -1,8 +1,10 @@
+"use client"
+
 import fetcher from "../utils/fetcher"
 import useSwr from "swr"
-import { Collection } from "../components/colletion"
+import { Collection } from "../components/collection"
 
-export default function Index() {
+export default function Page() {
   const { data: birds, error: birdsError } = useSwr("/api/birds", fetcher)
 
   const { data: flights, error: flightsErrors } = useSwr(
