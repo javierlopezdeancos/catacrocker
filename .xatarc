@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Catacrocker-cmnii9.eu-west-1.xata.sh/db/stagging",
+  "codegen": {
+    "output": "codegen/data.ts"
+  }
+}

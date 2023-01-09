@@ -1,0 +1,21 @@
+import "../styles/globals.css"
+
+import type { ReactElement, ReactNode } from "react"
+import type { NextPage } from "next"
+import type { AppProps } from "next/app"
+
+export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
+  getLayout?: (page: ReactElement) => ReactNode
+}
+
+type CatacrokcerPropsWithLayoutType = AppProps & {
+  Component: NextPageWithLayout
+}
+
+export default function CatacrockerApp({
+  Component,
+  pageProps,
+}: CatacrokcerPropsWithLayoutType) {
+  const getLayout = Component.getLayout ?? ((page) => page)
+  return getLayout(<Component {...pageProps} />)
+}
