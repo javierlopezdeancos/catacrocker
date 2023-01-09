@@ -27,16 +27,29 @@ const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: "top" as const,
+      position: "bottom" as const,
     },
     title: {
-      display: true,
+      display: false,
       text: "Impactos por especie",
     },
   },
 }
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"]
+const labels = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+]
 
 type BirdsImpactsDashboardComponentPropsType = {
   eagleImpacts?: number[]
@@ -50,7 +63,7 @@ export const BirdsImpactsChartComponent: FC<
     labels,
     datasets: [
       {
-        label: "Eagle",
+        label: "Águilas",
         data: eagleImpacts,
         fill: false,
         borderColor: "#96ce00",
@@ -58,7 +71,7 @@ export const BirdsImpactsChartComponent: FC<
         tension: 0.4,
       },
       {
-        label: "Pigeon",
+        label: "Palomas",
         data: pigeonsImpacts,
         fill: false,
         borderColor: "#4c6700",

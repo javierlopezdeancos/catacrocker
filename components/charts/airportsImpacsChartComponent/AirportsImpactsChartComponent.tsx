@@ -27,39 +27,52 @@ const options = {
   responsive: true,
   plugins: {
     legend: {
-      position: "top" as const,
+      position: "bottom" as const,
     },
     title: {
-      display: true,
-      text: "Impactos por especie",
+      display: false,
+      text: "Impactos por aeropuerto",
     },
   },
 }
 
-const labels = ["January", "February", "March", "April", "May", "June", "July"]
+const labels = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+]
 
 type BirdsImpactsDashboardComponentPropsType = {
-  eagleImpacts?: number[]
-  pigeonsImpacts?: number[]
+  madridImpacts?: number[]
+  tenerifeImpacts?: number[]
 }
 
 export const AirportsImpactsChartComponent: FC<
   BirdsImpactsDashboardComponentPropsType
-> = ({ eagleImpacts, pigeonsImpacts }): JSX.Element => {
+> = ({ madridImpacts, tenerifeImpacts }): JSX.Element => {
   const data = {
     labels,
     datasets: [
       {
-        label: "Eagle",
-        data: eagleImpacts,
+        label: "Madrid",
+        data: madridImpacts,
         fill: false,
         borderColor: "#96ce00",
         backgroundColor: "#96ce00",
         tension: 0.4,
       },
       {
-        label: "Pigeon",
-        data: pigeonsImpacts,
+        label: "Tenerife",
+        data: tenerifeImpacts,
         fill: false,
         borderColor: "#4c6700",
         backgroundColor: "#4c6700",
