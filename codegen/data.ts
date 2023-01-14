@@ -12,7 +12,8 @@ const tables = [
     columns: [
       { name: "name", type: "string" },
       { name: "iata", type: "string" },
-      { name: "Country", type: "string" },
+      { name: "city", type: "string" },
+      { name: "country", type: "string" },
     ],
   },
   { name: "birds", columns: [{ name: "species", type: "string" }] },
@@ -31,6 +32,7 @@ const tables = [
       { name: "bird", type: "link", link: { table: "birds" } },
       { name: "flight", type: "link", link: { table: "flights" } },
       { name: "airport", type: "link", link: { table: "airports" } },
+      { name: "bird_weight", type: "string" },
     ],
   },
 ] as const;

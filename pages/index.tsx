@@ -1,12 +1,27 @@
+import { Divider } from "@mantine/core"
 import { AppLayout } from "../layouts/appLayout/AppLayout"
 import { HeaderComponent } from "../components/headerComponent/HeaderComponet"
 import { MainLayout } from "../layouts/mainLayout/MainLayout"
-import { DashboardLayout } from "../layouts/dashboardLayout/DashboardLayout"
-import { BirdsImpactsChartComponent } from "../components/charts/birdsImpactsChartComponent/BirdsImpactsChartComponent"
-import { AirportsImpactsChartComponent } from "../components/charts/airportsImpacsChartComponent/AirportsImpactsChartComponent"
-import { getXataClient } from "../codegen/data"
+import { OverviewComponent } from "../components/overviewComponent/OverviewComponent"
+import { ImpactsTableComponent } from "../components/impactsTableComponent/ImpactsTableComponent"
+import { getXataClient, Impacts } from "../codegen/data"
 
 const client = getXataClient()
+
+const getImpacts = async (): Promise<Impacts[]> => {
+  const impacts = await client.db.impacts
+    .select([
+      "id",
+      "bird.species",
+      "bird_weight",
+      "flight.number",
+      "flight.airplane",
+      "airport.name",
+      "airport.city",
+    ])
+    .getAll()
+  return impacts
+}
 
 const getPigeonsImpactsByMonths = async (): Promise<number[]> => {
   const pigeonsImpactsByMonths: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -171,6 +186,7 @@ const getTenerifeImpactsByMonths = async (): Promise<number[]> => {
 }
 
 export const getServerSideProps = async () => {
+  const impacts = await getImpacts()
   const eagleImpactsByMonths = await getEagleImpactsByMonths()
   const pigeonsImpactsByMonths = await getPigeonsImpactsByMonths()
   const madridImpactsByMonths = await getMadridImpactsByMonths()
@@ -178,6 +194,7 @@ export const getServerSideProps = async () => {
 
   return {
     props: {
+      impacts,
       eagleImpacts: eagleImpactsByMonths,
       pigeonsImpacts: pigeonsImpactsByMonths,
       madridImpacts: madridImpactsByMonths,
@@ -189,32 +206,26 @@ export const getServerSideProps = async () => {
 type PagePropsType = Awaited<ReturnType<typeof getServerSideProps>>["props"]
 
 export default function Page(props: PagePropsType): JSX.Element {
-  const { eagleImpacts, pigeonsImpacts, madridImpacts, tenerifeImpacts } = props
+  const {
+    impacts,
+    eagleImpacts,
+    pigeonsImpacts,
+    madridImpacts,
+    tenerifeImpacts,
+  } = props
 
   return (
     <AppLayout>
       <HeaderComponent />
+      <Divider />
       <MainLayout>
-        <h3 className="pb-7 text-3xl font-medium">Descripción</h3>
-        <section className="grid grid-rows-1 grid-flow-col gap-5">
-          <DashboardLayout>
-            <BirdsImpactsChartComponent
-              eagleImpacts={eagleImpacts}
-              pigeonsImpacts={pigeonsImpacts}
-            />
-          </DashboardLayout>
-          <DashboardLayout>
-            <AirportsImpactsChartComponent
-              madridImpacts={madridImpacts}
-              tenerifeImpacts={tenerifeImpacts}
-            />
-          </DashboardLayout>
-          <section className="grid grid-cols-1 grid-flow-row gap-5">
-            <article className="bg-neutral-100 shadow-md shadow-gray-100 h-full w-96 rounded-3xl"></article>
-            <article className="bg-neutral-100 shadow-md shadow-gray-100 h-full w-96 rounded-3xl"></article>
-          </section>
-        </section>
-        <h3 className="pt-5 pb-7 text-3xl font-medium">Impactos</h3>
+        <OverviewComponent
+          eagleImpacts={eagleImpacts}
+          pigeonsImpacts={pigeonsImpacts}
+          madridImpacts={madridImpacts}
+          tenerifeImpacts={tenerifeImpacts}
+        />
+        <ImpactsTableComponent impacts={impacts} />
       </MainLayout>
     </AppLayout>
   )
